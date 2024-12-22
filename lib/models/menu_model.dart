@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:pizza_app_ui_flutter/models/size_model.dart';
 import 'package:pizza_app_ui_flutter/models/topping_model.dart';
 
@@ -46,6 +48,7 @@ class Menu {
 class MenuItem {
   final int id;
   final String name;
+  final String? image;
   final int? toppingsIncluded;
   double? price;
   int? pizzaCount = 1;
@@ -58,7 +61,8 @@ class MenuItem {
   MenuItem({
     required this.id,
     required this.name,
-    this.price
+    this.image,
+    this.price,
     this.pizzaCount,
     this.toppingsIncluded,
     this.size,
@@ -71,7 +75,8 @@ class MenuItem {
     return MenuItem(
       id: json['id'],
       name: json['name'],
-      price: json['price'],
+      image: json['image'],
+      price: json['price']?.toDouble(),
       pizzaCount: json['pizza_count'],
       toppingsIncluded: json['toppings_included'],
       // price: (json['price'] as num?)?.toDouble(),

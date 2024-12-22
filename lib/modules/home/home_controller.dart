@@ -24,6 +24,7 @@ class HomeController extends GetxController with StateMixin<MenuData> {
       MenuData data = MenuData.fromJson(value);
       change(data, status: RxStatus.success());
     }).catchError((error) {
+      print("Errpr: $error");
       change(null, status: RxStatus.error("unable to load data!"));
     });
 

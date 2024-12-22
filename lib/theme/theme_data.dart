@@ -32,13 +32,12 @@ class ThemeConfig {
         thickness: 1,
       ),
       // navigationBarTheme: NavigationBarThemeData(backgroundColor: cardBackground),
-      bottomNavigationBarTheme: BottomNavigationBarThemeData (
-        backgroundColor: Colors.blue,
-        selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.grey,
-        selectedLabelStyle: TextStyle(color: primaryText),
-        unselectedLabelStyle: TextStyle(color: secondaryText)
-      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: Colors.blue,
+          selectedItemColor: Colors.red,
+          unselectedItemColor: Colors.grey,
+          selectedLabelStyle: TextStyle(color: primaryText),
+          unselectedLabelStyle: TextStyle(color: secondaryText)),
       cardTheme: CardTheme(
         color: cardBackground,
         margin: EdgeInsets.zero,
@@ -218,5 +217,37 @@ class ThemeConfig {
         buttonText: ColorConstants.secondaryDarkAppColor,
         disabled: ColorConstants.secondaryDarkAppColor,
         error: Colors.red,
+      );
+
+  static ThemeData get myLightTheme => ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.white,
+        scaffoldBackgroundColor: Colors.blue,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+        ),
+        textTheme: TextTheme(
+          bodyLarge: TextStyle(color: Colors.black),
+          bodyMedium: TextStyle(color: Colors.black),
+        ),
+        chipTheme:
+            ChipThemeData(labelStyle: TextStyle(color: Colors.blue)),
+      );
+
+  static ThemeData get myDarkTheme => ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.black,
+        scaffoldBackgroundColor: Colors.red,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white,
+        ),
+        textTheme: TextTheme(
+          bodyLarge: TextStyle(color: Colors.white),
+          bodyMedium: TextStyle(color: Colors.white),
+        ),
+        chipTheme:
+            ChipThemeData(labelStyle: TextStyle(color: Colors.blueAccent)),
       );
 }

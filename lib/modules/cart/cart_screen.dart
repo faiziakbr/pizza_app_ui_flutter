@@ -7,9 +7,16 @@ class CartScreen extends GetView<CartController> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
-      body: Text("Got Cart Items "),
+      appBar: AppBar(),
+      body: SafeArea(
+          child: Container(
+        height: size.height,
+        width: size.width,
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Text("ITEMS: ${controller.menuItems.length}"),
+      )),
     );
   }
 }
-

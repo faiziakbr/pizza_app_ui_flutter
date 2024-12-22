@@ -21,13 +21,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       enableLog: true,
       initialRoute: Routes.HOME,
-      defaultTransition: Transition.fade,
+      defaultTransition: Transition.cupertino,
       getPages: AppPages.routes,
       initialBinding: AppBinding(),
       smartManagement: SmartManagement.keepFactory,
       title: 'Pizza App',
-      // theme: ThemeConfig.lightTheme,
-      // darkTheme: ThemeConfig.darkTheme,
+      // theme: ThemeConfig.myLightTheme,
+      // darkTheme: ThemeConfig.myDarkTheme,
       // themeMode: Get.put(ThemeController(), permanent: true).isDarkMode.value
       //     ? ThemeMode.dark
       //     : ThemeMode.light,

@@ -24,6 +24,17 @@ class ToppingModel {
       'price': price,
     };
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ToppingModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          name == other.name;
+
+  @override
+  int get hashCode => id.hashCode ^ name.hashCode;
 }
 
 class Toppings {
@@ -43,7 +54,6 @@ class Toppings {
     );
   }
 }
-
 
 class PizzaDetail {
   final List<SizeModel> sizes;

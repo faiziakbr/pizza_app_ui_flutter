@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pizza_app_ui_flutter/models/menu_model.dart';
 import 'package:pizza_app_ui_flutter/modules/home/home_controller.dart';
+import 'package:pizza_app_ui_flutter/routes/app_pages.dart';
+import 'package:pizza_app_ui_flutter/shared/widgets/MontserratText.dart';
 import 'package:pizza_app_ui_flutter/shared/widgets/custom_button.dart';
 import 'package:pizza_app_ui_flutter/shared/widgets/custom_toggle_button.dart';
 
@@ -13,6 +15,7 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: Container(
           width: size.width,
@@ -63,7 +66,7 @@ class HomeScreen extends GetView<HomeController> {
                               ),
                               // Horizontal ListView of Items
                               SizedBox(
-                                height: 150,
+                                height: 250,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   itemCount: menu?.items.length,
@@ -76,9 +79,13 @@ class HomeScreen extends GetView<HomeController> {
                                         width: 200,
                                         padding: EdgeInsets.all(8.0),
                                         child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                              CrossAxisAlignment.center,
                                           children: [
+                                            Image.asset("assets/${item?.image}",
+                                                height: 140),
                                             Text(
                                               item?.name ?? "",
                                               style: TextStyle(
@@ -86,19 +93,26 @@ class HomeScreen extends GetView<HomeController> {
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            CustomButton("Add", () {
-                                              if (item == null ||
-                                                  menu == null) {
-                                                return;
-                                              }
-                                              Get.bottomSheet(
-                                                  _bottomSheet(
-                                                      menu, item, size),
-                                                  backgroundColor: Colors.white,
-                                                  barrierColor:
-                                                      Colors.transparent,
-                                                  isScrollControlled: true);
-                                            })
+                                            IconButton(
+                                                onPressed: () {
+                                                  Get.toNamed(Routes.SELECTION,
+                                                      arguments: {
+                                                        "menu": menu,
+                                                        "item": item
+                                                      });
+                                                },
+                                                icon: Icon(Icons.add))
+                                            // CustomButton("Add", () {
+                                            //   if (item == null ||
+                                            //       menu == null) {
+                                            //     return;
+                                            //   }
+                                            //   Get.toNamed(Routes.SELECTION,
+                                            //       arguments: {
+                                            //         "menu": menu,
+                                            //         "item": item
+                                            //       });
+                                            // })
                                           ],
                                         ),
                                       ),
@@ -120,8 +134,11 @@ class HomeScreen extends GetView<HomeController> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Text("cart"),
+        onPressed: () {
+          Get.toNamed(Routes.CART);
+        },
+        child: Obx(
+            () => Text("cart ${controller.cartController.menuItems.length}")),
       ),
     );
   }
@@ -130,97 +147,130 @@ class HomeScreen extends GetView<HomeController> {
     print("GOT ITEM: ${menuItem.toString()} and ${menu.category}");
     var details = controller.pizzaDetail.value;
     if (details == null) return Container();
-    for (int i = 0; i < menuItem!.pizzaCount; i++) {
 
-    }
+    // for (int i = 0; i < menuItem.pizzaCount!; i++) {}
     menuItem.size = details.sizes[0];
+
+    return _pizzaDetailSelection(menu, menuItem, size);
+    // return Container(
+    //   height: size.height * 0.9,
+    //   margin: const EdgeInsets.only(top: 16),
+    //   child: Column(
+    //     children: [
+    //       Expanded(
+    //         child: ListView.builder(
+    //             itemCount: menuItem.pizzaCount ?? 1,
+    //             itemBuilder: (context, index) {
+    //               return _pizzaDetailSelection(menu, menuItem, size);
+    //             }),
+    //       ),
+    //       Flexible(
+    //           child: CustomButton("Add to order", () {
+    //         print("GOT ITEM FOR DATA: ${menuItem.toString()}");
+    //         // controller.addItem(item);
+    //       }))
+    //     ],
+    //   ),
+    // );
+  }
+
+  Widget _pizzaDetailSelection(Menu menu, MenuItem menuItem, Size size) {
+    var details = controller.pizzaDetail.value;
+    if (details == null) return Container();
+
     return SizedBox(
-      height: size.height * 0.9,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            CarouselSlider.builder(
-              options: CarouselOptions(
-                  initialPage: 0,
-                  animateToClosest: true,
-                  height: size.height * 0.4,
-                  onPageChanged: (index, reason) {
-                    var selectedSize = details.sizes[index];
-                    menuItem.size = selectedSize;
-                  }),
-              itemCount: details.sizes.length ?? 0,
-              itemBuilder: (context, index, pageViewIndex) {
-                var size = details.sizes[index];
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset("assets/${size.image}"),
-                    Text(size.name)
-                  ],
-                );
-              },
-            ),
-            Text("Toppings - Vegetarian"),
-            Wrap(
-              spacing: 10.0, // Space between items horizontally
-              runSpacing: 10.0, // Space between items vertically
-              children: details.toppings.vegetarian.map((item) {
-                return GestureDetector(
-                  onTap: () {
+      height: size.height * 0.8,
+      child: Column(
+        children: [
+          CarouselSlider.builder(
+            options: CarouselOptions(
+                initialPage: 0,
+                animateToClosest: true,
+                height: size.height * 0.4,
+                onPageChanged: (index, reason) {
+                  var selectedSize = details.sizes[index];
+                  menuItem.size = selectedSize;
+                }),
+            itemCount: details.sizes.length ?? 0,
+            itemBuilder: (context, index, pageViewIndex) {
+              var size = details.sizes[index];
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset("assets/${size.image}"),
+                  Text(size.name)
+                ],
+              );
+            },
+          ),
+          Text("Toppings - Vegetarian"),
+          Wrap(
+            spacing: 10.0, // Space between items horizontally
+            runSpacing: 10.0, // Space between items vertically
+            children: details.toppings.vegetarian.map((item) {
+              return GestureDetector(
+                onTap: () {
+                  if (!menuItem.toppings.contains(item)) {
                     menuItem.toppings.add(item);
-                  },
-                  child: Container(
-                    width: 80,
-                    // Fixed width for each item
-                    height: 80,
-                    // Fixed height for each item
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Text(
-                      item.name,
-                      style: TextStyle(color: Colors.white),
-                    ),
+                  } else {
+                    menuItem.toppings.remove(item);
+                  }
+                },
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: menuItem.toppings.contains(item)
+                        ? Colors.blue
+                        : Colors.yellow,
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
-                );
-              }).toList(),
-            ),
-            Text("Toppings - non-Vegetarian"),
-            Wrap(
-              spacing: 10.0, // Space between items horizontally
-              runSpacing: 10.0, // Space between items vertically
-              children: details.toppings.nonVegetarian.map((item) {
-                return GestureDetector(
-                  onTap: () {
+                  child: Text(
+                    item.name,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+          Text("Toppings - non-Vegetarian"),
+          Wrap(
+            spacing: 10.0, // Space between items horizontally
+            runSpacing: 10.0, // Space between items vertically
+            children: details.toppings.nonVegetarian.map((item) {
+              return GestureDetector(
+                onTap: () {
+                  if (!menuItem.toppings.contains(item)) {
                     menuItem.toppings.add(item);
-                  },
-                  child: Container(
-                    width: 80,
-                    // Fixed width for each item
-                    height: 80,
-                    // Fixed height for each item
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Text(
-                      item.name,
-                      style: TextStyle(color: Colors.white),
-                    ),
+                  } else {
+                    menuItem.toppings.remove(item);
+                  }
+                },
+                child: Container(
+                  width: 80,
+                  // Fixed width for each item
+                  height: 80,
+                  // Fixed height for each item
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
-                );
-              }).toList(),
-            ),
-            Flexible(
-                child: CustomButton("Add to order", () {
-              print("GOT ITEM FOR DATA: ${menuItem.toString()}");
-              // controller.addItem(item);
-            }))
-          ],
-        ),
+                  child: Text(
+                    item.name,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+          Flexible(
+              child: CustomButton("Add to order", () {
+            print("GOT ITEM FOR DATA: ${menuItem.toString()}");
+            // controller.addItem(item);
+          }))
+        ],
       ),
     );
   }
