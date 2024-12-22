@@ -1,0 +1,81 @@
+{
+  "menus": [
+    {
+      "id": "1",
+      "title": "Promotions",
+      "category": "promotional_items",
+      "items": [
+        {
+          "id": 1,
+          "name": "1 Medium Pizza with 2 toppings",
+          "price": 5,
+          "size": "Medium",
+          "pizza_count": 1,
+          "toppings_included": 2
+        },
+        {
+          "id": 2,
+          "name": "2 Medium Pizzas with 4 toppings each",
+          "price": 9,
+          "size": "Medium",
+          "pizza_count": 2,
+          "toppings_included": 4
+        },
+        {
+          "id": 3,
+          "name": "1 Large Pizza with 4 toppings",
+          "price": 3,
+          "size": "Large",
+          "pizza_count": 1,
+          "toppings_included": 4
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Flavors",
+      "category": "regular_flavors",
+      "items": [
+        {
+          "id": 1,
+          "name": "Chicken Supreme"
+        },
+        {
+          "id": 2,
+          "name": "Pepperoni"
+        },
+        {
+          "id": 3,
+          "name": "Veggie Delight"
+        },
+        {
+          "id": 4,
+          "name": "Hawaiian"
+        },
+        {
+          "id": 5,
+          "name": "Meat Lovers"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Drinks",
+      "category": "drinks",
+      "items": [
+        {
+          "id": 1,
+          "name": "coke"
+        },
+        {
+          "id": 2,
+          "name": "pepsi"
+        },
+        {
+          "id": 3,
+          "name": "fanta"
+        }
+      ]
+    }
+  ]
+}

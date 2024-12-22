@@ -1,0 +1,74 @@
+{
+  "sizes": [
+    {
+      "id": 1,
+      "name": "Small",
+      "price": 5.00,
+      "image": "1.png"
+    },
+    {
+      "id": 2,
+      "name": "Medium",
+      "price": 7.00,
+      "image": "2.png"
+    },
+    {
+      "id": 3,
+      "name": "Large",
+      "price": 8.00,
+      "image": "3.png"
+    },
+    {
+      "id": 4,
+      "name": "Extra Large",
+      "price": 9.00,
+      "image": "4.png"
+    }
+  ],
+  "toppings": {
+    "vegetarian": [
+      {
+        "id": 1,
+        "name": "Tomatoes",
+        "price": 1.00
+      },
+      {
+        "id": 2,
+        "name": "Onions",
+        "price": 0.50
+      },
+      {
+        "id": 3,
+        "name": "Bell Pepper",
+        "price": 1.00
+      },
+      {
+        "id": 4,
+        "name": "Mushrooms",
+        "price": 1.20
+      },
+      {
+        "id": 5,
+        "name": "Pineapple",
+        "price": 0.75
+      }
+    ],
+    "non_vegetarian": [
+      {
+        "id": 1,
+        "name": "Sausage",
+        "price": 1.00
+      },
+      {
+        "id": 2,
+        "name": "Pepperoni",
+        "price": 2.00
+      },
+      {
+        "id": 3,
+        "name": "Barbecue Chicken",
+        "price": 3.00
+      }
+    ]
+  }
+}
