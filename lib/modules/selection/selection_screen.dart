@@ -17,6 +17,7 @@ class SelectionScreen extends GetView<SelectionController> {
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.yellow,
           title: MontserratText(
               controller.menuItemArg.name ?? "", 18, FontWeight.bold,
               textColor: Colors.black),
@@ -31,22 +32,17 @@ class SelectionScreen extends GetView<SelectionController> {
                     Get.back();
                   }
                 },
-                icon: const Icon(Icons.add))
+                icon: const Icon(Icons.add_shopping_cart_sharp))
           ],
         ),
-        body: _promoFlavors(size)
-        // body: controller.menuArg.category == "regular_flavors"
-        //     ? _regularFlavors(size)
-        //     : _promoFlavors(size),
-        );
+        body: _body(size));
   }
 
-  Widget _promoFlavors(Size size) {
+  Widget _body(Size size) {
     return SafeArea(
       child: Container(
           height: size.height,
           width: size.width,
-          margin: const EdgeInsets.symmetric(vertical: 8),
           child: controller.obx((pizzaDetails) {
             if (pizzaDetails == null) return Container();
             // pizzaDetails.selected =
@@ -55,20 +51,28 @@ class SelectionScreen extends GetView<SelectionController> {
               itemCount: controller.pizzaCount,
               itemBuilder: (context, index) {
                 return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   spacing: 12,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text("Select option for pizza - ${index + 1}"),
-                    Text("Select flavors for pizza - ${index + 1}"),
+                    Text("Select options for pizza - ${index + 1}"),
+                    // Text("Select flavors for pizza - ${index + 1}"),
                     controller.menuArg.category == "promotional_items"
                         ? MultiSelectContainer(
                             singleSelectedItem: true,
                             items: pizzaDetails.flavors
                                 .map(
                                   (flavors) => MultiSelectCard(
+                                      highlightColor: Colors.yellow,
+                                      splashColor: Colors.yellow,
+                                      decorations: MultiSelectItemDecorations(
+                                          selectedDecoration: BoxDecoration(
+                                              color: Colors.yellow,
+                                              borderRadius:
+                                                  BorderRadius.circular(15))),
                                       value: flavors.name,
                                       child: _imageWithText(
-                                          "assets/1.png", flavors.name)),
+                                          flavors.image, flavors.name)),
                                 )
                                 .toList(),
                             onMaximumSelected:
@@ -88,9 +92,6 @@ class SelectionScreen extends GetView<SelectionController> {
                                 height: size.height * 0.4,
                                 onPageChanged: (index, reason) {
                                   var selectedSize = pizzaDetails.sizes[index];
-                                  // controller.menuItemArg.size = selectedSize;
-                                  // controller.itemPrice.value =
-                                  //     selectedSize.price;
                                   controller.pizzas[0].size = selectedSize.name;
                                 }),
                             // itemCount: details.sizes.length ?? 0,
@@ -101,18 +102,19 @@ class SelectionScreen extends GetView<SelectionController> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Image.asset("assets/${size.image}"),
-                                  Text(size.name)
+                                  MontserratText("Size - ${size.name}", 16,
+                                      FontWeight.bold)
                                 ],
                               );
                             },
                           ),
-                    const Text("Toppings"),
-                    _newToppings(
+                    _toppings(
                         "Vegetable",
                         pizzaDetails.toppings.vegetarian,
                         controller.pizzas[index].maxToppings,
                         controller.pizzas[index].vegToppings),
-                    _newToppings(
+                    const SizedBox(height: 10),
+                    _toppings(
                         "non-Vegetable",
                         pizzaDetails.toppings.nonVegetarian,
                         controller.pizzas[index].maxToppings,
@@ -133,158 +135,54 @@ class SelectionScreen extends GetView<SelectionController> {
     );
   }
 
-  Widget _regularFlavors(Size size) {
-    return SafeArea(
-        child: Container(
-            height: size.height,
-            width: size.width,
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            child: controller.obx((pizzaDetails) {
-              var details = pizzaDetails;
-              if (details == null) return Container();
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    CarouselSlider.builder(
-                      options: CarouselOptions(
-                          enableInfiniteScroll: false,
-                          initialPage: 0,
-                          animateToClosest: true,
-                          height: size.height * 0.4,
-                          onPageChanged: (index, reason) {
-                            var selectedSize = details.sizes[index];
-                            // controller.menuItemArg.size = selectedSize;
-                            // controller.itemPrice.value = selectedSize.price;
-                            controller.pizzas[0].sizePrice = selectedSize.price;
-                            controller.pizzas[0].size = selectedSize.name;
-                          }),
-                      itemCount: details.sizes.length ?? 0,
-                      itemBuilder: (context, index, pageViewIndex) {
-                        var size = details.sizes[index];
-                        return Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image.asset("assets/${size.image}"),
-                            Text(size.name)
-                          ],
-                        );
-                      },
-                    ),
-                    _newToppings(
-                        "Vegetarian",
-                        details.toppings.vegetarian,
-                        details.toppings.vegetarian.length,
-                        controller.pizzas[0].vegToppings),
-                    _newToppings(
-                        "non-Vegetarian",
-                        details.toppings.nonVegetarian,
-                        details.toppings.nonVegetarian.length,
-                        controller.pizzas[0].nonBegToppings),
-                    // _toppings("Vegetarian", details.toppings.vegetarian,
-                    //     controller.vegSelected, controller.selectedVegToppings),
-                    // _toppings(
-                    //     "non-Vegetarian",
-                    //     details.toppings.nonVegetarian,
-                    //     controller.nonVegSelected,
-                    //     controller.selectedNonVegToppings),
-                    // Obx(() => CustomButton(
-                    //         "Add to order ${controller.itemPrice.toStringAsFixed(1)}",
-                    //         () {
-                    //       // controller.menuItem.toppings
-                    //       //     .addAll(controller.selectedNonVegToppings);
-                    //       // controller.menuItem.toppings
-                    //       //     .addAll(controller.selectedVegToppings);
-                    //       // print(
-                    //       //     "GOT ITEM FOR DATA: ${controller.menuItem.toString()}");
-                    //       // controller.cartController.menuItems
-                    //       //     .add(controller.menuItem);
-                    //       // Get.back();
-                    //     }))
-                  ],
-                ),
-              );
-            })));
+  Widget _toppings(String title, List<ToppingModel> toppings,
+      int maxSelectedCount, List<ToppingModel> selectedToppings) {
+    return Wrap(
+      // runAlignment: WrapAlignment.start,
+      // alignment: WrapAlignment.start,
+      children: [
+        MontserratText("Toppings - $title", 16, FontWeight.bold),
+        MultiSelectContainer(
+            items: toppings
+                .map((topping) => MultiSelectCard(
+                      highlightColor: Colors.yellow,
+                      splashColor: Colors.yellow,
+                      decorations: MultiSelectItemDecorations(
+                          selectedDecoration: BoxDecoration(
+                              color: Colors.yellow,
+                              borderRadius: BorderRadius.circular(15))),
+                      child: _imageWithText(topping.image, topping.name),
+                      value: topping,
+                    ))
+                .toList(),
+            maxSelectableCount: maxSelectedCount,
+            onChange: (allSelectedItems, selectedItem) {
+              selectedToppings.clear();
+              selectedToppings.addAll(allSelectedItems);
+            })
+      ],
+    );
   }
 
-  Widget _imageWithText(String image, String text) {
+  Widget _imageWithText(String? image, String text) {
     return SizedBox(
-      width: 100,
-      height: 100,
+      height: 200,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
-              child: Image.asset(
-            "assets/1.png",
-            fit: BoxFit.contain,
-          )),
+          (image != null)
+              ? Expanded(
+                  child: Image.asset(
+                  "assets/$image",
+                  fit: BoxFit.fill,
+                ))
+              : Container(),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(text),
           )
         ],
       ),
-    );
-  }
-
-  Widget _newToppings(String title, List<ToppingModel> toppings,
-      int maxSelectedCount, List<ToppingModel> selectedToppings) {
-    return Wrap(
-      children: [
-        Text("Toppings - $title"),
-        MultiSelectContainer(
-            items: toppings
-                .map((topping) => MultiSelectCard(
-                      child: Text(topping.name),
-                      value: topping,
-                    ))
-                .toList(),
-            maxSelectableCount: maxSelectedCount,
-            onChange: (allSelectedItems, selectedItem) {
-              // controller.pizzas[index].vegToppings = allSelectedItems;
-
-              // selectedToppings = allSelectedItems;
-              selectedToppings.clear();
-              selectedToppings.addAll(allSelectedItems);
-              // print("GOT ITEMS: ${allSelectedItems} and ${selectedToppings} and ${controller.pizzas[0].vegToppings}");
-            })
-      ],
-    );
-  }
-
-  Widget _toppings(String title, List<ToppingModel> toppings,
-      RxList<bool> selected, List<ToppingModel> selectedToppings) {
-    // if (details == null) return Container();
-    // controller.vegSelected = List<bool>.filled(toppings.length, true);
-    // controller.vegSelected = RxList<bool>.filled(toppings.length, false);
-    return Wrap(
-      children: [
-        Text("Toppings - $title"),
-        Obx(() => ToggleButtons(
-              isSelected: selected,
-              onPressed: (index) {
-                var selectedTopping = toppings[index];
-                // if (title == "Vegetarian") {
-                if (!selectedToppings.contains(selectedTopping)) {
-                  selectedToppings.add(selectedTopping);
-                  selected[index] = true;
-                  // print("GOT LIST TRUE: ${controller.vegSelected}");
-                  controller.addPrice(selectedTopping.price);
-                } else {
-                  selectedToppings.remove(selectedTopping);
-                  selected[index] = false;
-                  controller.removePrice(selectedTopping.price);
-                  // print("GOT LIST FALSE: ${controller.vegSelected}");
-                }
-              },
-              children: toppings
-                  .map((topping) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text(topping.name),
-                      ))
-                  .toList(),
-            )),
-      ],
     );
   }
 }

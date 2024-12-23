@@ -7,8 +7,9 @@ class ToppingModel {
   final int id;
   final String name;
   final double price;
+  final String image;
 
-  ToppingModel({required this.id, required this.name, required this.price});
+  ToppingModel({required this.id, required this.name, required this.price, required this.image});
 
   // Factory constructor to parse from JSON
   factory ToppingModel.fromJson(Map<String, dynamic> json) {
@@ -16,6 +17,7 @@ class ToppingModel {
       id: json['id'],
       name: json['name'],
       price: json['price'].toDouble(),
+      image: json['image']
     );
   }
 

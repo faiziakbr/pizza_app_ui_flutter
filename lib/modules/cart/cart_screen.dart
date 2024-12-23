@@ -35,10 +35,7 @@ class CartScreen extends GetView<CartController> {
                   ),
                 ),
                 onDismissed: (value) {
-                  controller.deleteItem(index);
-                  if (controller.orderTotal() == 0) {
-                    Get.back();
-                  }
+                  _showDialog(index);
                 },
                 child: SizedBox(
                   child: Card(
@@ -89,8 +86,33 @@ class CartScreen extends GetView<CartController> {
           backgroundColor: Colors.yellow,
           onPressed: () {},
           label: Obx(() => MontserratText(
-              "Checkout: \$${controller.orderTotal()}", 20, FontWeight.bold,
+              "Checkout: \$${controller.orderTotal()?.toStringAsFixed(1) ?? 0.0}",
+              20,
+              FontWeight.bold,
               textColor: Colors.red))),
+    );
+  }
+
+  void _showDialog(int index) {
+    Get.defaultDialog(
+      title: "Confirmation",
+      middleText: "Are you sure you want to delete this?",
+      textCancel: "No",
+      textConfirm: "Yes",
+      backgroundColor: Colors.white,
+      onCancel: () {
+        controller.calculateOrderTotal();
+      },
+      onConfirm: () {
+        controller.deleteItem(index);
+        if (controller.orderTotal() == 0) {
+          Get.back();
+        }
+        Get.back();
+      },
+      confirmTextColor: Colors.white,
+      cancelTextColor: Colors.black,
+      barrierDismissible: true,
     );
   }
 }

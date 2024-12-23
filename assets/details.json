@@ -57,49 +57,52 @@
       {
         "id": 1,
         "name": "Tomatoes",
-        "price": 1.00
+        "price": 1.00,
+        "image": "tomatoes.png"
       },
       {
         "id": 2,
         "name": "Onions",
-        "price": 0.50
+        "price": 0.50,
+        "image": "onion.png"
       },
       {
         "id": 3,
         "name": "Bell Pepper",
-        "price": 1.00
+        "price": 1.00,
+        "image": "bell_pepper.png"
       },
       {
         "id": 4,
         "name": "Mushrooms",
-        "price": 1.20
+        "price": 1.20,
+        "image": "mushroom.jpeg"
       },
       {
         "id": 5,
         "name": "Pineapple",
-        "price": 0.75
-      },
-      {
-        "id": 6,
-        "name": "Carrots",
-        "price": 0.75
+        "price": 0.75,
+        "image": "pineapple.png"
       }
     ],
     "non_vegetarian": [
       {
         "id": 1,
         "name": "Sausage",
-        "price": 1.00
+        "price": 1.00,
+        "image": "sausage.jpg"
       },
       {
         "id": 2,
         "name": "Pepperoni",
-        "price": 2.00
+        "price": 2.00,
+        "image": "pepparoni.jpg"
       },
       {
         "id": 3,
         "name": "Barbecue Chicken",
-        "price": 3.00
+        "price": 3.00,
+        "image": "bbq_chicken.jpeg"
       }
     ]
   }
