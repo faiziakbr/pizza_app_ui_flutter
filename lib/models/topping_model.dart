@@ -1,4 +1,6 @@
 // Define the Topping class
+import 'package:get/get.dart';
+import 'package:pizza_app_ui_flutter/models/menu_model.dart';
 import 'package:pizza_app_ui_flutter/models/size_model.dart';
 
 class ToppingModel {
@@ -56,13 +58,19 @@ class Toppings {
 }
 
 class PizzaDetail {
+  final List<MenuItem> flavors;
   final List<SizeModel> sizes;
   final Toppings toppings;
+  RxList<bool> selected = RxList<bool>();
 
-  PizzaDetail({required this.sizes, required this.toppings});
+  PizzaDetail(
+      {required this.flavors, required this.sizes, required this.toppings});
 
   factory PizzaDetail.fromJson(Map<String, dynamic> json) {
     return PizzaDetail(
+      flavors: (json['flavors'] as List<dynamic>)
+          .map((e) => MenuItem.fromJson(e))
+          .toList(),
       sizes: (json['sizes'] as List<dynamic>)
           .map((e) => SizeModel.fromJson(e))
           .toList(),

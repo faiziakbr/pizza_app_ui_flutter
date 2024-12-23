@@ -38,6 +38,7 @@ dependencies:
   get: ^4.6.6
   carousel_slider: ^5.0.0
   auto_size_text: ^3.0.0
+  flutter_multi_select_items: ^0.4.3
 
 dev_dependencies:
   flutter_test:

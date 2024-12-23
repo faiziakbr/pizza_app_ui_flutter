@@ -9,28 +9,49 @@
           "id": 1,
           "name": "1 Medium Pizza with 2 toppings",
           "price": 5,
-          "size": "Medium",
-          "pizza_count": 1,
-          "toppings_included": 2,
-          "image": "6.png"
+          "image": "6.png",
+          "promo": [
+            {
+              "id": 1,
+              "image": "1.png",
+              "toppings_included": 2,
+              "size": "Medium"
+            }
+          ]
         },
         {
           "id": 2,
           "name": "2 Medium Pizzas with 4 toppings each",
           "price": 9,
-          "size": "Medium",
-          "pizza_count": 2,
-          "toppings_included": 4,
-          "image": "5.png"
+          "image": "5.png",
+          "promo": [
+            {
+              "id": 1,
+              "image": "1.png",
+              "toppings_included": 4,
+              "size": "Medium"
+            },
+            {
+              "id": 2,
+              "image": "1.png",
+              "toppings_included": 4,
+              "size": "Medium"
+            }
+          ]
         },
         {
           "id": 3,
           "name": "1 Large Pizza with 4 toppings",
-          "price": 3,
-          "size": "Large",
-          "pizza_count": 1,
-          "toppings_included": 4,
-          "image": "4.png"
+          "discount": 50,
+          "image": "4.png",
+          "promo": [
+            {
+              "id": 1,
+              "image": "1.png",
+              "toppings_included": 4,
+              "size": "Large"
+            }
+          ]
         }
       ]
     },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pizza_app_ui_flutter/modules/cart/cart_controller.dart';
+import 'package:pizza_app_ui_flutter/shared/widgets/MontserratText.dart';
 
 class CartScreen extends GetView<CartController> {
   const CartScreen({super.key});
@@ -15,7 +16,16 @@ class CartScreen extends GetView<CartController> {
         height: size.height,
         width: size.width,
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: Text("ITEMS: ${controller.menuItems.length}"),
+        child: ListView.builder(
+          itemCount: controller.getList().length,
+            itemBuilder: (context, index) {
+            var item = controller.getList()[index];
+            return Card(
+              child: ListTile(
+                title: MontserratText("${item.boxes.length}", 20, FontWeight.bold),
+              ),
+            );
+        }),
       )),
     );
   }

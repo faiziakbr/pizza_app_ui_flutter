@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:pizza_app_ui_flutter/models/promo_model.dart';
 import 'package:pizza_app_ui_flutter/models/size_model.dart';
 import 'package:pizza_app_ui_flutter/models/topping_model.dart';
 
@@ -47,13 +48,15 @@ class Menu {
 // MenuItem Class
 class MenuItem {
   final int id;
-  final String name;
+  String name;
   final String? image;
   final int? toppingsIncluded;
+  final List<Promo>? promo;
+  double? discount;
   double? price;
   int? pizzaCount = 1;
-  SizeModel? size;
-  List<ToppingModel> toppings = [];
+  // SizeModel? size;
+  // List<ToppingModel> toppings = [];
   // final double? price;
   // final String? size;
   // final int? toppingsIncluded;
@@ -63,9 +66,11 @@ class MenuItem {
     required this.name,
     this.image,
     this.price,
+    this.discount,
     this.pizzaCount,
     this.toppingsIncluded,
-    this.size,
+    // this.size,
+    this.promo,
     // this.price,
     // this.size,
     // this.toppingsIncluded,
@@ -78,7 +83,13 @@ class MenuItem {
       image: json['image'],
       price: json['price']?.toDouble(),
       pizzaCount: json['pizza_count'],
+      discount: json['discount']?.toDouble(),
       toppingsIncluded: json['toppings_included'],
+      promo: json['promo'] != null
+          ? (json['promo'] as List<dynamic>)
+          .map((p) => Promo.fromJson(p as Map<String, dynamic>))
+          .toList()
+          : null,
       // price: (json['price'] as num?)?.toDouble(),
       // size: json['size'],
       // toppingsIncluded: json['toppings_included'],
@@ -87,6 +98,6 @@ class MenuItem {
 
   @override
   String toString() {
-    return 'MenuItem{id: $id, name: $name, size: $size, toppings: $toppings}';
+    return 'MenuItem{id: $id, name: $name}';
   }
 }

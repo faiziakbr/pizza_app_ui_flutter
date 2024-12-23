@@ -44,14 +44,14 @@ class HomeController extends GetxController with StateMixin<MenuData> {
 
   //public functions
 
-  void addItem(MenuItem? item) {
-    print("ADD ITEM: ${item}");
-    if (item == null) return;
-    // menu.items.add(item);
-    cartController.addItems(item);
-
-    print("GOT MENU ITEM: ${cartController.menuItems.value}");
-  }
+  // void addItem(MenuItem? item) {
+  //   print("ADD ITEM: ${item}");
+  //   if (item == null) return;
+  //   // menu.items.add(item);
+  //   cartController.addItems(item);
+  //
+  //   print("GOT MENU ITEM: ${cartController.menuItems.value}");
+  // }
 
   // returns true to allow user to select only toppings but not size of that particular item
   // int isPromotional(Menu menu, MenuItem item) {
