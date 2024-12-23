@@ -1,13 +1,12 @@
-import 'dart:math';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:pizza_app_ui_flutter/models/topping_model.dart';
 import 'package:pizza_app_ui_flutter/modules/selection/selection_controller.dart';
+import 'package:pizza_app_ui_flutter/shared/extensions/custom_snackbar.dart';
 import 'package:pizza_app_ui_flutter/shared/widgets/MontserratText.dart';
-import 'package:pizza_app_ui_flutter/shared/widgets/custom_button.dart';
 
 class SelectionScreen extends GetView<SelectionController> {
   const SelectionScreen({super.key});
@@ -26,8 +25,12 @@ class SelectionScreen extends GetView<SelectionController> {
                 onPressed: () {
                   var result = controller.calculate();
                   if (!result.status) {
-                    Get.snackbar(result.message, result.message);
+                    Get.customSnackbar("OOPS!", result.message, error: true);
                   } else {
+                    Fluttertoast.showToast(
+                        msg: "Item successfully added",
+                        backgroundColor: Colors.yellow,
+                        gravity: ToastGravity.BOTTOM);
                     controller.addToCart();
                     Get.back();
                   }
@@ -40,13 +43,11 @@ class SelectionScreen extends GetView<SelectionController> {
 
   Widget _body(Size size) {
     return SafeArea(
-      child: Container(
+      child: SizedBox(
           height: size.height,
           width: size.width,
           child: controller.obx((pizzaDetails) {
             if (pizzaDetails == null) return Container();
-            // pizzaDetails.selected =
-            //     RxList<bool>.filled(controller.menuItem.promo?.length, false);
             return ListView.separated(
               itemCount: controller.pizzaCount,
               itemBuilder: (context, index) {
@@ -138,8 +139,6 @@ class SelectionScreen extends GetView<SelectionController> {
   Widget _toppings(String title, List<ToppingModel> toppings,
       int maxSelectedCount, List<ToppingModel> selectedToppings) {
     return Wrap(
-      // runAlignment: WrapAlignment.start,
-      // alignment: WrapAlignment.start,
       children: [
         MontserratText("Toppings - $title", 16, FontWeight.bold),
         MultiSelectContainer(

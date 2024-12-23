@@ -91,7 +91,8 @@ class SelectionController extends GetxController with StateMixin<PizzaDetail> {
           var promo = menuItemArg.promo![i];
           var pizzaModel = PizzaModel();
           pizzaModel.size = promo.size;
-          var sizeModel = data.sizes.firstWhereOrNull( (value) => value.name == promo.size);
+          var sizeModel =
+              data.sizes.firstWhereOrNull((value) => value.name == promo.size);
           pizzaModel.sizePrice = sizeModel?.price;
           pizzaModel.maxToppings = promo.toppingsIncluded;
           pizzaModel.image = menuItemArg.image;
@@ -126,9 +127,7 @@ class SelectionController extends GetxController with StateMixin<PizzaDetail> {
       if (menuArg.category == "promotional_items") {
         if (!((pizza.vegToppings.length + pizza.nonBegToppings.length) ==
             pizza.maxToppings)) {
-          return Tuple(false,
-              "${pizza.name ?? ""} need to select at ${pizza
-                  .maxToppings} toppings!");
+          return Tuple(false, "Select ${pizza.maxToppings} toppings!");
         }
       }
     }

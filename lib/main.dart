@@ -26,6 +26,8 @@ class MyApp extends StatelessWidget {
       initialBinding: AppBinding(),
       smartManagement: SmartManagement.keepFactory,
       title: 'Pizza App',
+      themeMode: ThemeMode.dark,
+
       // theme: ThemeConfig.myLightTheme,
       // darkTheme: ThemeConfig.myDarkTheme,
       // themeMode: Get.put(ThemeController(), permanent: true).isDarkMode.value

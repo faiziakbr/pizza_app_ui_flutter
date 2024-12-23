@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:pizza_app_ui_flutter/models/menu_model.dart';
 import 'package:pizza_app_ui_flutter/modules/home/home_controller.dart';
 import 'package:pizza_app_ui_flutter/routes/app_pages.dart';
+import 'package:pizza_app_ui_flutter/shared/extensions/custom_snackbar.dart';
 import 'package:pizza_app_ui_flutter/shared/widgets/MontserratText.dart';
 import 'package:pizza_app_ui_flutter/shared/widgets/custom_button.dart';
 import 'package:pizza_app_ui_flutter/shared/widgets/custom_toggle_button.dart';
@@ -160,7 +161,7 @@ class HomeScreen extends GetView<HomeController> {
           if (controller.cartController.orderCount() > 0) {
             Get.toNamed(Routes.CART);
           } else {
-            Get.snackbar("Cart Empty", "");
+            Get.customSnackbar("Cart Empty", "");
           }
         },
         backgroundColor: Colors.yellow,
