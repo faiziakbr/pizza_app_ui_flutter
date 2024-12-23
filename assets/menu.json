@@ -9,11 +9,11 @@
           "id": 1,
           "name": "1 Medium Pizza with 2 toppings",
           "price": 5,
-          "image": "6.png",
+          "image": "promo1.jpeg",
           "promo": [
             {
               "id": 1,
-              "image": "1.png",
+              "image": "promo1.jpeg",
               "toppings_included": 2,
               "size": "Medium"
             }
@@ -23,17 +23,17 @@
           "id": 2,
           "name": "2 Medium Pizzas with 4 toppings each",
           "price": 9,
-          "image": "5.png",
+          "image": "promo2.jpg",
           "promo": [
             {
               "id": 1,
-              "image": "1.png",
+              "image": "promo2.jpg",
               "toppings_included": 4,
               "size": "Medium"
             },
             {
               "id": 2,
-              "image": "1.png",
+              "image": "promo2.jpg",
               "toppings_included": 4,
               "size": "Medium"
             }
@@ -43,11 +43,11 @@
           "id": 3,
           "name": "1 Large Pizza with 4 toppings",
           "discount": 50,
-          "image": "4.png",
+          "image": "promo3.jpeg",
           "promo": [
             {
               "id": 1,
-              "image": "1.png",
+              "image": "promo3.jpeg",
               "toppings_included": 4,
               "size": "Large"
             }

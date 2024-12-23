@@ -32,7 +32,7 @@ class SelectionController extends GetxController with StateMixin<PizzaDetail> {
   var itemPrice = 0.0.obs;
 
   List<PizzaModel> pizzas = [];
-  late BoxModel boxModel;
+  late OrderItemModel boxModel;
   var pizzaCount = 0;
 
   @override
@@ -83,7 +83,7 @@ class SelectionController extends GetxController with StateMixin<PizzaDetail> {
         pizzas.add(pizzaModel);
       } else if (menuArg.category == "promotional_items") {
         pizzaCount = menuItemArg.promo?.length ?? 0;
-        boxModel = BoxModel();
+        boxModel = OrderItemModel();
         boxModel.required = menuItemArg.promo!.length;
 
         // for (int i = 0; i < menuItemArg.pizzaCount!; i++) {
@@ -123,10 +123,13 @@ class SelectionController extends GetxController with StateMixin<PizzaDetail> {
         return Tuple(false, "Select one flavor");
       }
       // print(" GOT INDOT: ${pizza.vegToppings.length + pizza.nonBegToppings.length} and ${pizza.maxToppings} and ${(pizza.vegToppings.length + pizza.nonBegToppings.length) > pizza.maxToppings} ");
-      if (!((pizza.vegToppings.length + pizza.nonBegToppings.length) ==
-          pizza.maxToppings)) {
-        return Tuple(false,
-            "${pizza.name ?? ""} need to select at ${pizza.maxToppings} toppings!");
+      if (menuArg.category == "promotional_items") {
+        if (!((pizza.vegToppings.length + pizza.nonBegToppings.length) ==
+            pizza.maxToppings)) {
+          return Tuple(false,
+              "${pizza.name ?? ""} need to select at ${pizza
+                  .maxToppings} toppings!");
+        }
       }
     }
     return Tuple(true, "All good");
@@ -145,15 +148,15 @@ class SelectionController extends GetxController with StateMixin<PizzaDetail> {
         }
       }
 
-      var boxModel = BoxModel();
-      boxModel.items = pizzas;
-      boxModel.price = totalPrice;
-      boxModel.actualPrice = totalPrice;
-      boxModel.isPromoPrice = false;
-
-      // print("GOT BOX MODEL: ${boxModel}");
       var orderItem = OrderItemModel();
-      orderItem.boxes.add(boxModel);
+      orderItem.items = pizzas;
+      orderItem.price = totalPrice;
+      orderItem.actualPrice = totalPrice;
+      orderItem.isPromoPrice = false;
+      orderItem.image = pizzas[0].image;
+      // print("GOT BOX MODEL: ${boxModel}");
+      // var orderItem = OrderItemModel();
+      // orderItem.boxes.add(boxModel);
 
       cartController.addItems(orderItem);
     }
@@ -170,18 +173,19 @@ class SelectionController extends GetxController with StateMixin<PizzaDetail> {
         }
       }
 
-      var boxModel = BoxModel();
-      boxModel.items = pizzas;
-      boxModel.actualPrice = totalPrice;
-      boxModel.isPromoPrice = true;
-      if (menuItemArg.price != null) {
-        boxModel.price = menuItemArg.price;
-      } else if (menuItemArg.discount != null) {
-        boxModel.price = totalPrice * (menuItemArg.discount! / 100);
-      }
-      print("GOT BOX MODEL: ${boxModel}");
       var orderItem = OrderItemModel();
-      orderItem.boxes.add(boxModel);
+      orderItem.items = pizzas;
+      orderItem.actualPrice = totalPrice;
+      orderItem.isPromoPrice = true;
+      orderItem.image = pizzas[0].image;
+      if (menuItemArg.price != null) {
+        orderItem.price = menuItemArg.price;
+      } else if (menuItemArg.discount != null) {
+        orderItem.price = totalPrice * (menuItemArg.discount! / 100);
+      }
+      print("GOT BOX MODEL: ${orderItem}");
+      // var orderItem = OrderItemModel();
+      // orderItem.boxes.add(boxModel);
 
       cartController.addItems(orderItem);
     }

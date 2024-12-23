@@ -17,7 +17,7 @@ class MontserratText extends StatelessWidget {
   final bool underline;
 
   MontserratText(this.text, this.size, this.fontWeight,
-      { this.textColor = Colors.white,
+      { this.textColor = Colors.black,
         this.textAlign = TextAlign.start,
         this.maxLines = 1 ,
         this.textOverflow = TextOverflow.ellipsis,

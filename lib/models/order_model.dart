@@ -4,24 +4,19 @@ import 'package:pizza_app_ui_flutter/models/topping_model.dart';
 
 class OrderModel {
   List<OrderItemModel> orderItems = [];
-
+  double? total = 0;
   // OrderModel(this.orderItems);
 }
 
 class OrderItemModel {
-  List<BoxModel> boxes = [];
-
-  // OrderItemModel(this.boxes);
-
-}
-
-class BoxModel {
   List<PizzaModel> items = [];
   int required = 0;
   double? price; // Total calculated price OR discountedPrice
   double? actualPrice = 0; //Total calculated price
   bool isPromoPrice = false;
   String? image;
+  // double? displayPrice = 0;
+  int count = 1;
 
   @override
   String toString() {
