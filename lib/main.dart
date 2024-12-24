@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pizza_app_ui_flutter/theme/theme_data.dart';
 
 import 'AppBinding.dart';
 import 'routes/app_pages.dart';
-import 'theme/ThemeController.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

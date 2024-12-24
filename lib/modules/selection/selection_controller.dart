@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:pizza_app_ui_flutter/models/Tuple.dart';
 import 'package:pizza_app_ui_flutter/models/menu_model.dart';
 import 'package:pizza_app_ui_flutter/models/order_model.dart';
 import 'package:pizza_app_ui_flutter/models/topping_model.dart';
@@ -45,6 +46,10 @@ class SelectionController extends GetxController with StateMixin<PizzaDetail> {
         pizzas.add(pizzaModel);
       } else if (menuArg.category == "promotional_items") {
         pizzaCount = menuItemArg.promo?.length ?? 0;
+        if (menuItemArg.promo == null) {
+          change(null, status: RxStatus.error("unable to load data!"));
+          return;
+        }
         boxModel = OrderItemModel();
         boxModel.required = menuItemArg.promo!.length;
 
@@ -106,9 +111,7 @@ class SelectionController extends GetxController with StateMixin<PizzaDetail> {
       orderItem.image = pizzas[0].image;
 
       cartController.addItems(orderItem);
-    }
-
-    if (menuArg.category == "promotional_items") {
+    } else if (menuArg.category == "promotional_items") {
       var totalPrice = 0.0;
       for (var pizza in pizzas) {
         totalPrice += pizza.sizePrice!;

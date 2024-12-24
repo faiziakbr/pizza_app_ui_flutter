@@ -1,8 +1,4 @@
-import 'dart:ffi';
-
 import 'package:pizza_app_ui_flutter/models/promo_model.dart';
-import 'package:pizza_app_ui_flutter/models/size_model.dart';
-import 'package:pizza_app_ui_flutter/models/topping_model.dart';
 
 class MenuData {
   final List<Menu> menus;
@@ -55,11 +51,6 @@ class MenuItem {
   double? discount;
   double? price;
   int? pizzaCount = 1;
-  // SizeModel? size;
-  // List<ToppingModel> toppings = [];
-  // final double? price;
-  // final String? size;
-  // final int? toppingsIncluded;
 
   MenuItem({
     required this.id,

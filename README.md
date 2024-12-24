@@ -15,6 +15,14 @@ The app includes three screens to provide a seamless user experience:
 
 The current implementation of the checkout feature clears the cart and displays a confirmation via a Snackbar.
 
+**Landscape mode is also available**
+
+## Constraints
+
+1. **Cart Screen** Can only add 10 items of same flavor at max.
+2. **Selection Screen** Topping for flavors can all selected while for promo, toppings selection is constrained based on the max toppings allowed to be added in cart.
+3. **Selection Screen** For 3rd Offer, I am multiplying by 0.5 to make the 50% discount
+
 ## Screenshots
 ### Home Screen
 ![Home Screen](screen_shots/home.PNG)
@@ -24,7 +32,7 @@ The current implementation of the checkout feature clears the cart and displays 
 ![Selection Screen](screen_shots/promo_selection.PNG)
 
 ### Cart Screen
-![Cart Screen](screen_shots/cart_selection.PNG)
+![Cart Screen](screen_shots/cart.PNG)
 
 ## Features
 - Dynamic menu loading using JSON files.
@@ -34,6 +42,11 @@ The current implementation of the checkout feature clears the cart and displays 
     - **Selection Screen**: Customize pizzas dynamically.
     - **Cart Screen**: View and adjust cart items.
 - Simple checkout functionality (clears the cart and shows a Snackbar).
+
+
+### VIDEO AND APK
+- Android Apk is present in **Android_apk** folder
+- App video is present in **Video** folder
 
 ## Getting Started
 

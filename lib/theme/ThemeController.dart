@@ -29,7 +29,7 @@ class ThemeController extends GetxController with WidgetsBindingObserver {
 
   void _setThemeFromSystem() {
     final brightness = WidgetsBinding.instance.window.platformBrightness;
-    // final brightness = PlatformDispatcher.instance.platformBrightness;
+
     isDarkMode.value = brightness == Brightness.dark;
     Get.changeTheme(
         isDarkMode.value ? ThemeConfig.darkTheme : ThemeConfig.lightTheme);

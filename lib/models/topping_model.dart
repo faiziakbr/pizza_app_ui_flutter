@@ -1,4 +1,3 @@
-// Define the Topping class
 import 'package:get/get.dart';
 import 'package:pizza_app_ui_flutter/models/menu_model.dart';
 import 'package:pizza_app_ui_flutter/models/size_model.dart';
@@ -9,16 +8,18 @@ class ToppingModel {
   final double price;
   final String image;
 
-  ToppingModel({required this.id, required this.name, required this.price, required this.image});
+  ToppingModel(
+      {required this.id,
+      required this.name,
+      required this.price,
+      required this.image});
 
-  // Factory constructor to parse from JSON
   factory ToppingModel.fromJson(Map<String, dynamic> json) {
     return ToppingModel(
-      id: json['id'],
-      name: json['name'],
-      price: json['price'].toDouble(),
-      image: json['image']
-    );
+        id: json['id'],
+        name: json['name'],
+        price: json['price'].toDouble(),
+        image: json['image']);
   }
 
   Map<String, dynamic> toJson() {

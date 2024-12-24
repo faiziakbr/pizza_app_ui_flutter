@@ -13,7 +13,8 @@ class CartScreen extends GetView<CartController> {
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: MontserratText("Cart", 20, FontWeight.bold),
+        backgroundColor: Colors.yellow,
+        title: const MontserratText("Cart", 20, FontWeight.bold),
       ),
       body: SafeArea(
           child: Container(
@@ -40,43 +41,45 @@ class CartScreen extends GetView<CartController> {
                 },
                 child: SizedBox(
                   child: Card(
-                    child: ListTile(
-                      leading: Image.asset("assets/${item.image}"),
-                      title: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Flexible(
-                            child: MontserratText(
-                                "${item.items[0].name}", 20, FontWeight.bold),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ListTile(
+                          leading: Image.asset("assets/${item.image}"),
+                          title: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              MontserratText(
+                                  "${item.items[0].name}", 20, FontWeight.bold),
+                            ],
                           ),
-                          item.isPromoPrice
-                              ? Flexible(
-                                  child: MontserratText(
-                                      "(PROMO)", 8, FontWeight.normal,
-                                      textColor: Colors.red),
-                                )
-                              : Container()
-                        ],
-                      ),
-                      subtitle: ItemCount(
-                        initialValue: item.count,
-                        step: 1,
-                        color: Colors.yellow,
-                        buttonSizeHeight: 40,
-                        buttonSizeWidth: 60,
-                        textStyle: const TextStyle(fontSize: 20),
-                        minValue: 1,
-                        maxValue: 10,
-                        decimalPlaces: 0,
-                        onChanged: (value) {
-                          item.count = value.toInt();
-                          controller.addCount(index, value.toInt());
-                        },
-                      ),
-                      trailing: MontserratText(
-                          "\$${(item.price! * item.count).toStringAsFixed(1)}",
-                          24,
-                          FontWeight.bold),
+                          subtitle: item.isPromoPrice
+                              ? const MontserratText(
+                                  "(PROMO)", 8, FontWeight.normal,
+                                  textColor: Colors.red)
+                              : Container(),
+                          trailing: MontserratText(
+                              "\$${(item.price! * item.count).toStringAsFixed(1)}",
+                              24,
+                              FontWeight.bold),
+                        ),
+                        ItemCount(
+                          initialValue: item.count,
+                          step: 1,
+                          color: Colors.yellow,
+                          buttonSizeHeight: 40,
+                          buttonSizeWidth: 60,
+                          textStyle: const TextStyle(fontSize: 20),
+                          minValue: 1,
+                          maxValue: 10,
+                          decimalPlaces: 0,
+                          onChanged: (value) {
+                            item.count = value.toInt();
+                            controller.addCount(index, value.toInt());
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ),

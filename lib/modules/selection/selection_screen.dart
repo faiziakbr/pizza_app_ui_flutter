@@ -57,71 +57,78 @@ class SelectionScreen extends GetView<SelectionController> {
                   spacing: 12,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    (controller.pizzaCount > 1) ?
-                      MontserratText("Select options for pizza - ${index + 1}",
-                          20, FontWeight.bold) : Container(),
+                    (controller.pizzaCount > 1)
+                        ? MontserratText(
+                        "Select options for pizza - ${index + 1}",
+                        20,
+                        FontWeight.bold)
+                        : Container(),
                     controller.menuArg.category == "promotional_items"
                         ? MultiSelectContainer(
-                            singleSelectedItem: true,
-                            items: pizzaDetails.flavors
-                                .map(
-                                  (flavors) => MultiSelectCard(
-                                      highlightColor: Colors.yellow,
-                                      splashColor: Colors.yellow,
-                                      decorations: MultiSelectItemDecorations(
-                                          selectedDecoration: BoxDecoration(
-                                              color: Colors.yellow,
-                                              borderRadius:
-                                                  BorderRadius.circular(15))),
-                                      value: flavors.name,
-                                      child: _imageWithText(
-                                          flavors.image, flavors.name, null)),
-                                )
-                                .toList(),
-                            onMaximumSelected:
-                                (allSelectedItems, selectedItem) {
-                              Get.snackbar("Limit reached",
-                                  'The limit has been reached');
-                            },
-                            onChange: (allSelectedItems, selectedItem) {
-                              controller.pizzas[index].name = selectedItem;
-                            },
-                          )
+                      singleSelectedItem: true,
+                      items: pizzaDetails.flavors
+                          .map(
+                            (flavors) =>
+                            MultiSelectCard(
+                                highlightColor: Colors.yellow,
+                                splashColor: Colors.yellow,
+                                decorations: MultiSelectItemDecorations(
+                                    selectedDecoration: BoxDecoration(
+                                        color: Colors.yellow,
+                                        borderRadius:
+                                        BorderRadius.circular(15))),
+                                value: flavors.name,
+                                child: _imageWithText(
+                                    flavors.image, flavors.name, null)),
+                      )
+                          .toList(),
+                      onMaximumSelected: (allSelectedItems, selectedItem) {
+                        Get.snackbar(
+                            "Limit reached", 'The limit has been reached');
+                      },
+                      onChange: (allSelectedItems, selectedItem) {
+                        controller.pizzas[index].name = selectedItem;
+                      },
+                    )
                         : CarouselSlider.builder(
-                            options: CarouselOptions(
-                                enableInfiniteScroll: false,
-                                initialPage: 0,
-                                animateToClosest: true,
-                                onPageChanged: (index, reason) {
-                                  var selectedSize = pizzaDetails.sizes[index];
-                                  controller.pizzas[0].size = selectedSize.name;
-                                  controller.pizzas[0].sizePrice = selectedSize.price;
-                                }),
-                            // itemCount: details.sizes.length ?? 0,
-                            itemCount: pizzaDetails.sizes.length ?? 0,
-                            itemBuilder: (context, index, pageViewIndex) {
-                              var size = pizzaDetails.sizes[index];
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Expanded(
-                                      flex: 5,
-                                      child:
-                                          Image.asset("assets/${size.image}")),
-                                  Flexible(
-                                    flex: 1,
-                                    child: MontserratText("Size - ${size.name}",
-                                        16, FontWeight.bold),
-                                  ),
-                                  Flexible(
-                                    flex: 1,
-                                    child: MontserratText("\$${size.price}",
-                                        16, FontWeight.bold, textColor: Colors.red,),
-                                  )
-                                ],
-                              );
-                            },
-                          ),
+                      options: CarouselOptions(
+                          enableInfiniteScroll: false,
+                          initialPage: 0,
+                          animateToClosest: true,
+                          onPageChanged: (index, reason) {
+                            var selectedSize = pizzaDetails.sizes[index];
+                            controller.pizzas[0].size = selectedSize.name;
+                            controller.pizzas[0].sizePrice =
+                                selectedSize.price;
+                          }),
+                      // itemCount: details.sizes.length ?? 0,
+                      itemCount: pizzaDetails.sizes.length ?? 0,
+                      itemBuilder: (context, index, pageViewIndex) {
+                        var size = pizzaDetails.sizes[index];
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Expanded(
+                                flex: 5,
+                                child: Image.asset("assets/${size.image}")),
+                            Flexible(
+                              flex: 1,
+                              child: MontserratText("Size - ${size.name}",
+                                  16, FontWeight.bold),
+                            ),
+                            Flexible(
+                              flex: 1,
+                              child: MontserratText(
+                                "\$${size.price}",
+                                16,
+                                FontWeight.bold,
+                                textColor: Colors.red,
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                    ),
                     _toppings(
                         "Vegetarian",
                         pizzaDetails.toppings.vegetarian,
@@ -141,11 +148,21 @@ class SelectionScreen extends GetView<SelectionController> {
                   width: size.width,
                   height: 2,
                   color: Colors.black,
-                  margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 8, horizontal: 8),
                 );
               },
             );
-          })),
+          },
+              onError: (error) {
+                return const Center(
+                    child: MontserratText(
+                        "Sorry! unexpected error!", 16, FontWeight.bold));
+              },
+              onEmpty: const Center(
+                  child: MontserratText(
+                      "Sorry! seems like its empty!", 16, FontWeight.bold)))
+      ),
     );
   }
 
@@ -158,17 +175,18 @@ class SelectionScreen extends GetView<SelectionController> {
         MontserratText("Toppings - $title", 16, FontWeight.bold),
         MultiSelectContainer(
             items: toppings
-                .map((topping) => MultiSelectCard(
-                      highlightColor: Colors.yellow,
-                      splashColor: Colors.yellow,
-                      decorations: MultiSelectItemDecorations(
-                          selectedDecoration: BoxDecoration(
-                              color: Colors.yellow,
-                              borderRadius: BorderRadius.circular(15))),
-                      child: _imageWithText(
-                          topping.image, topping.name, topping.price),
-                      value: topping,
-                    ))
+                .map((topping) =>
+                MultiSelectCard(
+                  highlightColor: Colors.yellow,
+                  splashColor: Colors.yellow,
+                  decorations: MultiSelectItemDecorations(
+                      selectedDecoration: BoxDecoration(
+                          color: Colors.yellow,
+                          borderRadius: BorderRadius.circular(15))),
+                  child: _imageWithText(
+                      topping.image, topping.name, topping.price),
+                  value: topping,
+                ))
                 .toList(),
             maxSelectableCount: maxSelectedCount,
             onChange: (allSelectedItems, selectedItem) {
@@ -188,10 +206,10 @@ class SelectionScreen extends GetView<SelectionController> {
         children: [
           (image != null)
               ? Expanded(
-                  child: Image.asset(
-                  "assets/$image",
-                  fit: BoxFit.fill,
-                ))
+              child: Image.asset(
+                "assets/$image",
+                fit: BoxFit.fill,
+              ))
               : Container(),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -201,11 +219,11 @@ class SelectionScreen extends GetView<SelectionController> {
                 (price == null)
                     ? Container()
                     : MontserratText(
-                        "+\$${price.toStringAsFixed(1)}",
-                        14,
-                        FontWeight.normal,
-                        textColor: Colors.red,
-                      ),
+                  "+\$${price.toStringAsFixed(1)}",
+                  14,
+                  FontWeight.normal,
+                  textColor: Colors.red,
+                ),
               ],
             ),
           )

@@ -1,4 +1,3 @@
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
@@ -16,22 +15,22 @@ class MontserratText extends StatelessWidget {
   final double bottom;
   final bool underline;
 
-  MontserratText(this.text, this.size, this.fontWeight,
-      { this.textColor = Colors.black,
-        this.textAlign = TextAlign.start,
-        this.maxLines = 1 ,
-        this.textOverflow = TextOverflow.ellipsis,
-        this.left = 0,
-        this.right = 0,
-        this.top = 0,
-        this.bottom = 0,
-        this.underline = false});
+  const MontserratText(this.text, this.size, this.fontWeight,
+      {super.key, this.textColor = Colors.black,
+      this.textAlign = TextAlign.start,
+      this.maxLines = 1,
+      this.textOverflow = TextOverflow.ellipsis,
+      this.left = 0,
+      this.right = 0,
+      this.top = 0,
+      this.bottom = 0,
+      this.underline = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin:
-      EdgeInsets.only(left: left, right: right, top: top, bottom: bottom),
+          EdgeInsets.only(left: left, right: right, top: top, bottom: bottom),
       child: AutoSizeText(
         text,
         style: TextStyle(
@@ -39,8 +38,7 @@ class MontserratText extends StatelessWidget {
             fontSize: size,
             fontWeight: fontWeight,
             decoration:
-            underline ? TextDecoration.underline : TextDecoration.none,
-            fontFamily: "Montserrat"),
+                underline ? TextDecoration.underline : TextDecoration.none),
         textAlign: textAlign,
         overflow: textOverflow,
         maxLines: maxLines,
