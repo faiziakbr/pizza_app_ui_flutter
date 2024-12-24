@@ -5,7 +5,7 @@ extension CustomSnackbar on GetInterface {
   void customSnackbar(String title, String message, {bool error = false}) {
     Get.snackbar(title, message,
         backgroundColor: error ? Colors.red : Colors.yellow,
-        colorText: Colors.white,
+        colorText: Colors.black,
         snackPosition: SnackPosition.BOTTOM,
         isDismissible: true);
   }

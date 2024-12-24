@@ -23,16 +23,17 @@ class SelectionScreen extends GetView<SelectionController> {
           actions: [
             IconButton(
                 onPressed: () {
-                  var result = controller.calculate();
+                  var result = controller.validate();
                   if (!result.status) {
                     Get.customSnackbar("OOPS!", result.message, error: true);
                   } else {
                     Fluttertoast.showToast(
                         msg: "Item successfully added",
+                        textColor: Colors.black,
                         backgroundColor: Colors.yellow,
                         gravity: ToastGravity.BOTTOM);
                     controller.addToCart();
-                    Get.back();
+                    Get.back(closeOverlays: true);
                   }
                 },
                 icon: const Icon(Icons.add_shopping_cart_sharp))
@@ -56,8 +57,9 @@ class SelectionScreen extends GetView<SelectionController> {
                   spacing: 12,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text("Select options for pizza - ${index + 1}"),
-                    // Text("Select flavors for pizza - ${index + 1}"),
+                    (controller.pizzaCount > 1) ?
+                      MontserratText("Select options for pizza - ${index + 1}",
+                          20, FontWeight.bold) : Container(),
                     controller.menuArg.category == "promotional_items"
                         ? MultiSelectContainer(
                             singleSelectedItem: true,
@@ -73,7 +75,7 @@ class SelectionScreen extends GetView<SelectionController> {
                                                   BorderRadius.circular(15))),
                                       value: flavors.name,
                                       child: _imageWithText(
-                                          flavors.image, flavors.name)),
+                                          flavors.image, flavors.name, null)),
                                 )
                                 .toList(),
                             onMaximumSelected:
@@ -90,10 +92,10 @@ class SelectionScreen extends GetView<SelectionController> {
                                 enableInfiniteScroll: false,
                                 initialPage: 0,
                                 animateToClosest: true,
-                                height: size.height * 0.4,
                                 onPageChanged: (index, reason) {
                                   var selectedSize = pizzaDetails.sizes[index];
                                   controller.pizzas[0].size = selectedSize.name;
+                                  controller.pizzas[0].sizePrice = selectedSize.price;
                                 }),
                             // itemCount: details.sizes.length ?? 0,
                             itemCount: pizzaDetails.sizes.length ?? 0,
@@ -102,21 +104,32 @@ class SelectionScreen extends GetView<SelectionController> {
                               return Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Image.asset("assets/${size.image}"),
-                                  MontserratText("Size - ${size.name}", 16,
-                                      FontWeight.bold)
+                                  Expanded(
+                                      flex: 5,
+                                      child:
+                                          Image.asset("assets/${size.image}")),
+                                  Flexible(
+                                    flex: 1,
+                                    child: MontserratText("Size - ${size.name}",
+                                        16, FontWeight.bold),
+                                  ),
+                                  Flexible(
+                                    flex: 1,
+                                    child: MontserratText("\$${size.price}",
+                                        16, FontWeight.bold, textColor: Colors.red,),
+                                  )
                                 ],
                               );
                             },
                           ),
                     _toppings(
-                        "Vegetable",
+                        "Vegetarian",
                         pizzaDetails.toppings.vegetarian,
                         controller.pizzas[index].maxToppings,
                         controller.pizzas[index].vegToppings),
                     const SizedBox(height: 10),
                     _toppings(
-                        "non-Vegetable",
+                        "non-Vegetarian",
                         pizzaDetails.toppings.nonVegetarian,
                         controller.pizzas[index].maxToppings,
                         controller.pizzas[index].nonBegToppings),
@@ -125,10 +138,10 @@ class SelectionScreen extends GetView<SelectionController> {
               },
               separatorBuilder: (BuildContext context, int index) {
                 return Container(
-                  width: size.width * 0.9,
-                  height: 10,
+                  width: size.width,
+                  height: 2,
                   color: Colors.black,
-                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                 );
               },
             );
@@ -138,7 +151,9 @@ class SelectionScreen extends GetView<SelectionController> {
 
   Widget _toppings(String title, List<ToppingModel> toppings,
       int maxSelectedCount, List<ToppingModel> selectedToppings) {
-    return Wrap(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      // alignment: WrapAlignment.start,
       children: [
         MontserratText("Toppings - $title", 16, FontWeight.bold),
         MultiSelectContainer(
@@ -150,7 +165,8 @@ class SelectionScreen extends GetView<SelectionController> {
                           selectedDecoration: BoxDecoration(
                               color: Colors.yellow,
                               borderRadius: BorderRadius.circular(15))),
-                      child: _imageWithText(topping.image, topping.name),
+                      child: _imageWithText(
+                          topping.image, topping.name, topping.price),
                       value: topping,
                     ))
                 .toList(),
@@ -163,10 +179,11 @@ class SelectionScreen extends GetView<SelectionController> {
     );
   }
 
-  Widget _imageWithText(String? image, String text) {
+  Widget _imageWithText(String? image, String text, double? price) {
     return SizedBox(
-      height: 200,
+      height: 150,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           (image != null)
@@ -178,7 +195,19 @@ class SelectionScreen extends GetView<SelectionController> {
               : Container(),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(text),
+            child: Column(
+              children: [
+                MontserratText(text, 14, FontWeight.normal),
+                (price == null)
+                    ? Container()
+                    : MontserratText(
+                        "+\$${price.toStringAsFixed(1)}",
+                        14,
+                        FontWeight.normal,
+                        textColor: Colors.red,
+                      ),
+              ],
+            ),
           )
         ],
       ),

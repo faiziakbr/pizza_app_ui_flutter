@@ -5,7 +5,7 @@ import 'package:pizza_app_ui_flutter/theme/ThemeController.dart';
 class AppBinding extends Bindings {
   @override
   void dependencies() async {
-    Get.put(ThemeController());
+    // Get.put(ThemeController()); //TODO: use this if needed
     Get.put(CartController());
   }
 }

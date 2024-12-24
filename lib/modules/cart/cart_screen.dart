@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
 import 'package:pizza_app_ui_flutter/modules/cart/cart_controller.dart';
+import 'package:pizza_app_ui_flutter/shared/extensions/custom_snackbar.dart';
 import 'package:pizza_app_ui_flutter/shared/widgets/MontserratText.dart';
 
 class CartScreen extends GetView<CartController> {
@@ -84,7 +85,13 @@ class CartScreen extends GetView<CartController> {
       )),
       floatingActionButton: FloatingActionButton.extended(
           backgroundColor: Colors.yellow,
-          onPressed: () {},
+          onPressed: () {
+            Get.customSnackbar("Order confirmed!", "Your order will be delivered soon!");
+            Future.delayed(const Duration(seconds: 1), () {
+              controller.checkout();
+              Get.back(closeOverlays: true);
+            });
+          },
           label: Obx(() => MontserratText(
               "Checkout: \$${controller.orderTotal()?.toStringAsFixed(1) ?? 0.0}",
               20,

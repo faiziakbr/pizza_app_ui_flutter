@@ -52,4 +52,8 @@ class CartController extends GetxController {
     calculateOrderTotal();
     _order.refresh();
   }
+
+  void checkout() {
+    _order.value = OrderModel();
+  }
 }
